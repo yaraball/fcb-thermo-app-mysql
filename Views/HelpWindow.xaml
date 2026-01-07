@@ -1,0 +1,239 @@
+<!--
+  HelpWindow.xaml
+  Window displaying help and instructions for the application.
+  Contains a scrollable text area for user guidance and documentation.
+-->
+
+<Window x:Class="fcb_thermo_app.Views.HelpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Help and Instructions"
+        Height="600"
+        Width="700"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="CanResize"
+        Background="{StaticResource WhiteBrush}">
+  <!-- Main Border and Padding -->
+  <Border Margin="16"
+          Padding="16"
+          Background="{StaticResource WhiteBrush}"
+          CornerRadius="12">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+      <!-- Scrollable Help Content -->
+      <TextBlock TextWrapping="Wrap"
+                 FontSize="16"
+                 Foreground="Black">
+        <Bold>Oven Thermal Analytics Dashboard - User Guide</Bold>
+        <LineBreak/><LineBreak/>
+
+        <Bold>1. Main View Overview</Bold>
+        <LineBreak/>
+        When you launch the app, you will see the main window divided into several sections:
+        <LineBreak/>
+        • <Bold>Top Toolbar:</Bold> Model/trial selection, placement, import, layers, export, and help.
+        <LineBreak/>
+        • <Bold>Main Content Area:</Bold> Four canvases showing different oven parts:
+        <LineBreak/>
+        &#x2003;&#x2003;• Top Left: Main Body Top
+        <LineBreak/>
+        &#x2003;&#x2003;• Top Right: Reinforcement Top
+        <LineBreak/>
+        &#x2003;&#x2003;• Bottom Left: Main Body Bottom
+        <LineBreak/>
+        &#x2003;&#x2003;• Bottom Right: Reinforcement Bottom
+        <LineBreak/>
+        • <Bold>Bottom Toolbar:</Bold> Color scale controls, timeline slider, playback, and time offset.
+        <LineBreak/><LineBreak/>
+
+        <Bold>2. Starting a New Session</Bold>
+        <LineBreak/>
+        <Bold>A. Select or Create a Model</Bold>
+        <LineBreak/>
+        - Use the model dropdown (top left) to select an existing oven model.
+        <LineBreak/>
+        - If none are available, click <Bold>"Create New Model"</Bold> on the right side of the top toolbar to add one.
+        <LineBreak/>
+        &#x2003;&#x2003;• Enter a model name (required) and optional serial number.
+        <LineBreak/>
+        &#x2003;&#x2003;• Select DXF files for the main body and/or reinforcement. At least one is required.
+        <LineBreak/>
+        &#x2003;&#x2003;• Click "Create" to save the model. It will now appear in the model dropdown and be selected automatically.
+        <LineBreak/><LineBreak/>
+
+        <Bold>B. Place Thermoelements</Bold>
+        <LineBreak/>
+        - Click <Bold>"Place Thermoelements"</Bold> in the top toolbar.
+        <LineBreak/>
+        - In the placement window, toggle between main body and reinforcement.
+        <LineBreak/>
+        - Set the number of thermoelements and click "Start Placement".
+        <LineBreak/>
+        - Click on the canvases to place thermoelements at desired positions.
+        <LineBreak/>
+        - Edit or move thermoelements as needed. The selected thermoelement is highlighted in pink. Click "Reposition Selected Thermoelement" to move the thermoelement to the place you click next on the canvas. You may also transfer a thermoelement from one canvas to another. To edit the channel associated with the thermoelement, use the dialog after clicking "Change Channel".
+        <LineBreak/>
+        - Click "Save" when finished.
+        <LineBreak/><LineBreak/>
+
+        <Bold>C. Editing Thermoelements (Right-Click Menu)</Bold>
+        <LineBreak/>
+        - Right-click on any thermoelement to open the context menu.
+        <LineBreak/>
+        - You can:
+        <LineBreak/>
+        &#x2003;&#x2003;• <Bold>Edit Channel:</Bold> Change the channel number assigned to the thermoelement.
+        <LineBreak/>
+        &#x2003;&#x2003;• <Bold>Add/Edit Note:</Bold> Attach a note to the thermoelement for documentation or reminders.
+        <LineBreak/>
+        &#x2003;&#x2003;• <Bold>Toggle Active State:</Bold> Set the thermoelement as active or inactive.
+        <LineBreak/>
+        - <Bold>Inactive thermoelements</Bold> are ignored in calculations for min, max, and average values, and do not influence automatic color scaling.
+        <LineBreak/><LineBreak/>
+
+        <Bold>D. Import Measurement Data</Bold>
+        <LineBreak/>
+        - Click <Bold>"Import GBD"</Bold> in the top toolbar.
+        <LineBreak/>
+        - Select GBD files for channels 1-10 and/or 11-20. At least one file is required.
+        <LineBreak/>
+        - Set performance settings and pyrometer positions as needed. An empty performance setting will default to 0%. To place pyrometers, right click on the corresponding box and the selection will be highlighted in red. Only one pyrometer may be set per canvas, so right clicking again will unselect the previous one. Enter the number of the pyrometer in the input box next to the canvas label.
+        <LineBreak/>
+        - To simplify the import process, you can fetch the last used settings by clicking "Fetch Last Used", which will auto-fill any settings from your previous import for this model. This only works if you have imported data for this model before.
+        <LineBreak/>
+        - Click "Import" to load the measurement data.
+        <LineBreak/>
+        - The app will visualize the data on the canvases.
+        <LineBreak/><LineBreak/>
+
+        <Bold>3. Visualization and Analysis</Bold>
+        <LineBreak/>
+        <Bold>A. Canvases</Bold>
+         <LineBreak/>
+        - Each canvas shows a section of the oven with thermoelement markers, performance grid, and pyrometer positions.
+        <LineBreak/>
+        - The pyrometers are drawn as pink triangles, the thermoelements as circles colored by temperature. The performance grid overlays a semi-transparent grid indicating performance settings with pastel colors corresponding to their settings.
+        <LineBreak/>
+        - Click the maximize button (⛶) in the corner of any canvas for a detailed, full-screen view. This is especially useful for closely inspecting data or watching the animated measurement playback.
+        <LineBreak/>
+        - The stats bar above each canvas provides instant feedback on the min, max, average temperature values and maximum temperature difference for that oven section.
+        <LineBreak/><LineBreak/>
+
+        <Bold>B. Layers (Visibility Controls)</Bold>
+        <LineBreak/>
+        - Click <Bold>"Layers"</Bold> in the top toolbar to open the menu.
+        <LineBreak/>
+        - Toggle visibility for pyrometers, thermoelement heatmap, values, performance grid, and more.
+        <LineBreak/>
+        - Only selected layers are shown and exported.
+        <LineBreak/><LineBreak/>
+
+        <Bold>C. Color Scale Controls (Bottom Toolbar)</Bold>
+        <LineBreak/>
+        - <Bold>Auto Color Scale:</Bold> Enabled by default, adjusts to data.
+        <LineBreak/>
+        - <Bold>Manual Color Scale:</Bold> Toggle off auto to set min/max values manually. These persist until auto is re-enabled. Use the input boxes to the left and right of the color gradient to change the min and max values.
+        <LineBreak/>
+        - The color gradient shows mapping from cold (blue) to hot (red).
+        <LineBreak/><LineBreak/>
+
+        <Bold>D. Timeline and Playback</Bold>
+        <LineBreak/>
+        - Use the slider at the bottom right to select a specific timestamp.
+        <LineBreak/>
+        - Enter a time offset (mm:ss) in the box just left of the slider to jump to a specific time.
+        <LineBreak/>
+        - The play button animates the measurement over time. You may also pause it at any time.
+        <LineBreak/>
+        - The end time shows the total duration. Note that the play button will not have any effect if there is only one timestamp in the data or no data available yet.
+        <LineBreak/><LineBreak/>
+
+        <Bold>E. General Visualization Info</Bold>
+        <LineBreak/>
+        - <Bold>N/A</Bold> indicates that there is currently no value to display for a thermoelement or grid cell. Before data import, all thermoelements and performance grids will show N/A.
+        <LineBreak/>
+        - <Bold>Grey color</Bold> means there is no color scaling applied yet, usually because no data is available. Before data import, all thermoelements and performance grids will appear grey.
+        <LineBreak/>
+        - Thermoelements with invalid data or errors are automatically set to inactive (slightly greyed out) and display a <Bold>red X</Bold> to indicate missing or invalid data. Before data import, all thermoelements will appear this way.
+        <LineBreak/><LineBreak/>
+
+        <Bold>4. Exporting Visualizations</Bold>
+        <LineBreak/>
+        - Click <Bold>"Export"</Bold> in the top toolbar.
+        <LineBreak/>
+        - Choose to export the main view or individual canvases as JPEG images.
+        <LineBreak/>
+        - Only visible layers are included in the export.
+        <LineBreak/><LineBreak/>
+
+        <Bold>5. Viewing Previous Trials</Bold>
+        <LineBreak/>
+        - Use the trial dropdown (top right) to load previous trials.
+        <LineBreak/>
+        - The canvases and statistics update to reflect the selected trial.
+        <LineBreak/><LineBreak/>
+
+        <Bold>6. Other Features</Bold>
+        <LineBreak/>
+        - <Bold>Help Button:</Bold> Opens this guide.
+        <LineBreak/>
+        - <Bold>Tooltips:</Bold> Hover over buttons and inputs for quick explanations.
+        <LineBreak/>
+        - <Bold>Message Boxes:</Bold> Provide feedback on actions like imports, exports, and errors. They will inform you if something goes wrong or confirm successful operations and provide additional information as needed.
+        <LineBreak/>
+        - Drag thermoelements within the canvases to reposition them quickly in the main window. Remember though, that this will update the database position immediately without needing to click save.
+        <LineBreak/><LineBreak/>
+
+        <Bold>7. Tips &amp; Best Practices</Bold>
+        <LineBreak/>
+        - Save your thermoelement layout before importing new measurements.
+        <LineBreak/>
+        - Use the Layers menu to focus on specific data.
+        <LineBreak/>
+        - Manual color scale is useful for comparing different trials.
+        <LineBreak/>
+        - Use the Main Window to get an overview of the oven's thermal performance, but refer to the maximized versions of each canvas for detailed analysis.
+        <LineBreak/>
+        - Export images for reports or presentations directly from the app.
+        <LineBreak/><LineBreak/>
+
+        <Bold>8. Troubleshooting</Bold>
+        <LineBreak/>
+        - <Bold>Missing DXF Files:</Bold> Ensure your DXF files are valid and selected when creating a model.
+        <LineBreak/>
+        - <Bold>No Data Displayed:</Bold> Check that you have imported measurement files and placed thermoelements.
+        <LineBreak/>
+        - <Bold>Layer Not Visible:</Bold> Use the Layers menu to enable the desired overlay.
+        <LineBreak/><LineBreak/>
+
+        <Bold>Summary of Main Controls</Bold>
+        <LineBreak/>
+        Model Dropdown - Select or create an oven model
+        <LineBreak/>
+        Place Thermoelements - Place or edit sensor positions
+        <LineBreak/>
+        Import GBD - Import measurement data
+        <LineBreak/>
+        Layers - Show/hide overlays and data layers
+        <LineBreak/>
+        Export - Save images of the current view or canvases
+        <LineBreak/>
+        Trial Dropdown - Load previous trials
+        <LineBreak/>
+        Model Creation - Create a new oven model
+        <LineBreak/>
+        Help - Open this guide
+        <LineBreak/>
+
+        <LineBreak/>
+        Color Scale - Adjust color mapping for temperature
+        <LineBreak/>
+        Play Button - Animate measurement over time
+        <LineBreak/>
+        Timeline Slider - View data at specific times
+        <LineBreak/><LineBreak/>
+
+        You are now ready to use the Oven Thermal Analytics Dashboard!
+      </TextBlock>
+    </ScrollViewer>
+  </Border>
+</Window>

@@ -1,0 +1,498 @@
+<!--
+  Resources.xaml
+  Central resource dictionary for theme colors, brushes, and styles used throughout the application.
+  Contains color definitions, brushes, and reusable control styles for a consistent look and feel.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!-- Theme Colors -->
+  <Color x:Key="WhiteColor">#FFFFFF</Color>
+  <Color x:Key="BlackColor">#000000</Color>
+  <Color x:Key="PrimaryBlue">#00205B</Color>
+  <Color x:Key="DarkBlue">#005587</Color>
+  <Color x:Key="LightBlue">#0085AD</Color>
+  <Color x:Key="SteelBlue">#6399AE</Color>
+  <Color x:Key="LightGrey">#B7C9D3</Color>
+  <Color x:Key="Silver">#B7C9D3</Color>
+
+  <!-- Neutral Colors for Background -->
+  <Color x:Key="Grey">#404040</Color>
+  <Color x:Key="DarkGrey">#2D2D2D</Color>
+
+  <!-- Vibrant Colors -->
+  <Color x:Key="Green">#84BD00</Color>
+  <Color x:Key="Yellow">#E1E000</Color>
+  <Color x:Key="Orange">#FE5000</Color>
+  <Color x:Key="Red">#E4002B</Color>
+  <Color x:Key="Pink">#DA1884</Color>
+  <Color x:Key="Purple">#A51890</Color>
+  <Color x:Key="Turquoise">#00AEC7</Color>
+
+  <!-- Define SolidColorBrushes for convenience -->
+  <SolidColorBrush x:Key="WhiteBrush"
+                   Color="{StaticResource WhiteColor}"/>
+  <SolidColorBrush x:Key="BlackBrush"
+                   Color="{StaticResource BlackColor}"/>
+  <SolidColorBrush x:Key="PrimaryBlueBrush"
+                   Color="{StaticResource PrimaryBlue}"/>
+  <SolidColorBrush x:Key="DarkBlueBrush"
+                   Color="{StaticResource DarkBlue}"/>
+  <SolidColorBrush x:Key="LightBlueBrush"
+                   Color="{StaticResource LightBlue}"/>
+  <SolidColorBrush x:Key="SteelBlueBrush"
+                   Color="{StaticResource SteelBlue}"/>
+  <SolidColorBrush x:Key="LightGreyBrush"
+                   Color="{StaticResource LightGrey}"/>
+  <SolidColorBrush x:Key="SilverBrush"
+                   Color="{StaticResource Silver}"/>
+
+  <SolidColorBrush x:Key="GreyBrush"
+                   Color="{StaticResource Grey}"/>
+  <SolidColorBrush x:Key="DarkGreyBrush"
+                   Color="{StaticResource DarkGrey}"/>
+
+  <SolidColorBrush x:Key="GreenBrush"
+                   Color="{StaticResource Green}"/>
+  <SolidColorBrush x:Key="YellowBrush"
+                   Color="{StaticResource Yellow}"/>
+  <SolidColorBrush x:Key="OrangeBrush"
+                   Color="{StaticResource Orange}"/>
+  <SolidColorBrush x:Key="RedBrush"
+                   Color="{StaticResource Red}"/>
+  <SolidColorBrush x:Key="PinkBrush"
+                   Color="{StaticResource Pink}"/>
+  <SolidColorBrush x:Key="PurpleBrush"
+                   Color="{StaticResource Purple}"/>
+  <SolidColorBrush x:Key="TurquoiseBrush"
+                   Color="{StaticResource Turquoise}"/>
+
+  <!-- Rounded Button -->
+  <Style x:Key="RoundedButtonStyle"
+         TargetType="Button">
+    <Setter Property="Background"
+            Value="{StaticResource GreyBrush}"/>
+    <Setter Property="Foreground"
+            Value="{StaticResource WhiteBrush}"/>
+    <Setter Property="Padding"
+            Value="15,8"/>
+    <Setter Property="Margin"
+            Value="8"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Border Background="{TemplateBinding Background}"
+                  BorderBrush="{StaticResource WhiteBrush}"
+                  BorderThickness="1"
+                  CornerRadius="6"
+                  SnapsToDevicePixels="True">
+            <ContentPresenter HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              RecognizesAccessKey="True"
+                              Margin="{TemplateBinding Padding}"/>
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+    <Style.Triggers>
+      <Trigger Property="IsEnabled"
+               Value="False">
+        <Setter Property="Opacity"
+                Value="0.5"/>
+      </Trigger>
+    </Style.Triggers>
+  </Style>
+
+  <!-- Rounded ComboBox -->
+  <Style x:Key="RoundedComboBoxStyle"
+         TargetType="ComboBox">
+    <Setter Property="Background"
+            Value="{StaticResource GreyBrush}"/>
+    <Setter Property="Foreground"
+            Value="{StaticResource WhiteBrush}"/>
+    <Setter Property="BorderThickness"
+            Value="1"/>
+    <Setter Property="Padding"
+            Value="5"/>
+    <Setter Property="HorizontalContentAlignment"
+            Value="Left"/>
+    <Setter Property="VerticalContentAlignment"
+            Value="Center"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="ComboBox">
+          <Grid>
+            <!-- Border for rounded corners -->
+            <Border
+              Name="Border"
+              Background="{TemplateBinding Background}"
+              BorderBrush="{TemplateBinding BorderBrush}"
+              BorderThickness="{TemplateBinding BorderThickness}"
+              CornerRadius="6">
+              <Grid>
+                <!-- Editable TextBox for IsEditable=True -->
+                <TextBox
+                  x:Name="PART_EditableTextBox"
+                  Style="{x:Null}"
+                  Visibility="Hidden"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Center"
+                  Margin="10,3,30,3"
+                  Background="Transparent"
+                  BorderThickness="0"
+                  Foreground="{TemplateBinding Foreground}"/>
+
+                <!-- ContentPresenter for selected item -->
+                <ContentPresenter
+                  Name="ContentSite"
+                  IsHitTestVisible="False"
+                  Content="{TemplateBinding SelectionBoxItem}"
+                  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                  ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                  Margin="10,3,30,3"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Left"/>
+
+                <!-- ToggleButton for dropdown -->
+                <ToggleButton
+                  Name="ToggleButton"
+                  Grid.Column="2"
+                  Focusable="False"
+                  IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                  ClickMode="Press"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Center"
+                  Width="20"
+                  Height="20"
+                  Background="Transparent"
+                  BorderBrush="{x:Null}">
+                  <Path
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Data="M 0 0 L 4 4 L 8 0 Z"
+                    Fill="{StaticResource WhiteBrush}"/>
+                  <ToggleButton.Style>
+                    <Style TargetType="ToggleButton">
+                      <Setter Property="Background"
+                              Value="Transparent"/>
+                      <Setter Property="BorderBrush"
+                              Value="Transparent"/>
+                      <Setter Property="Template">
+                        <Setter.Value>
+                          <ControlTemplate TargetType="ToggleButton">
+                            <Border Background="Transparent">
+                              <Path
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="M 0 0 L 4 4 L 8 0 Z"
+                                Fill="{StaticResource WhiteBrush}"/>
+                            </Border>
+                          </ControlTemplate>
+                        </Setter.Value>
+                      </Setter>
+                      <!-- Override visual states -->
+                      <Style.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                          <Setter Property="Background"
+                                  Value="Transparent"/>
+                          <Setter Property="BorderBrush"
+                                  Value="Transparent"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="True">
+                          <Setter Property="Background"
+                                  Value="Transparent"/>
+                          <Setter Property="BorderBrush"
+                                  Value="Transparent"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused"
+                                 Value="True">
+                          <Setter Property="Background"
+                                  Value="Transparent"/>
+                          <Setter Property="BorderBrush"
+                                  Value="Transparent"/>
+                        </Trigger>
+                      </Style.Triggers>
+                    </Style>
+                  </ToggleButton.Style>
+                </ToggleButton>
+              </Grid>
+            </Border>
+
+            <!-- Popup for dropdown items -->
+            <Popup
+              Name="Popup"
+              Placement="Bottom"
+              IsOpen="{TemplateBinding IsDropDownOpen}"
+              AllowsTransparency="True"
+              Focusable="False"
+              PopupAnimation="Slide">
+              <Grid
+                Name="DropDown"
+                SnapsToDevicePixels="True"
+                MinWidth="{TemplateBinding ActualWidth}"
+                MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                <Border
+                  x:Name="DropDownBorder"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="1"
+                  CornerRadius="6"/>
+                <ScrollViewer Margin="4,6,4,6"
+                              SnapsToDevicePixels="True">
+                  <StackPanel IsItemsHost="True"
+                              KeyboardNavigation.DirectionalNavigation="Contained"/>
+                </ScrollViewer>
+              </Grid>
+            </Popup>
+          </Grid>
+
+          <!-- Triggers to handle IsEditable -->
+          <ControlTemplate.Triggers>
+            <!-- Show TextBox when IsEditable=True -->
+            <Trigger Property="IsEditable"
+                     Value="True">
+              <Setter TargetName="ContentSite"
+                      Property="Visibility"
+                      Value="Hidden"/>
+              <Setter TargetName="PART_EditableTextBox"
+                      Property="Visibility"
+                      Value="Visible"/>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Rounded ContextMenu Style -->
+  <Style x:Key="RoundedContextMenuStyle"
+         TargetType="ContextMenu">
+    <Setter Property="Background"
+            Value="{StaticResource GreyBrush}"/>
+    <Setter Property="Foreground"
+            Value="{StaticResource WhiteBrush}"/>
+    <Setter Property="BorderBrush"
+            Value="{StaticResource WhiteBrush}"/>
+    <Setter Property="BorderThickness"
+            Value="1"/>
+    <Setter Property="Padding"
+            Value="4"/>
+    <Setter Property="SnapsToDevicePixels"
+            Value="True"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="ContextMenu">
+          <Border
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            CornerRadius="8"
+            Padding="{TemplateBinding Padding}">
+            <StackPanel IsItemsHost="True"/>
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Checkable MenuItem Style -->
+  <Style TargetType="MenuItem"
+         x:Key="CheckMenuItemStyle">
+    <Setter Property="Foreground"
+            Value="{StaticResource WhiteBrush}"/>
+    <Setter Property="Background"
+            Value="Transparent"/>
+    <Setter Property="Padding"
+            Value="8,4"/>
+    <Setter Property="Margin"
+            Value="2,2,2,2"/>
+    <Setter Property="Cursor"
+            Value="Hand"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="MenuItem">
+          <Border
+            x:Name="Border"
+            Background="{TemplateBinding Background}"
+            CornerRadius="6">
+            <Grid>
+              <!-- Checkbox visuals -->
+              <Border x:Name="CheckMarkBorder"
+                      Width="18"
+                      Height="18"
+                      BorderBrush="{StaticResource WhiteBrush}"
+                      BorderThickness="0.5"
+                      Background="Transparent"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Left"
+                      Margin="4,0,0,0"
+                      Visibility="Collapsed">
+                <Path x:Name="CheckMark"
+                      Data="M 4 9 L 8 13 L 14 5"
+                      Stroke="{StaticResource WhiteBrush}"
+                      StrokeThickness="2.5"
+                      StrokeEndLineCap="Round"
+                      StrokeStartLineCap="Round"
+                      Visibility="Collapsed"/>
+              </Border>
+              <ContentPresenter
+                ContentSource="Header"
+                VerticalAlignment="Center"
+                Margin="28,0,0,0"/>
+            </Grid>
+          </Border>
+          <ControlTemplate.Triggers>
+            <!-- Show checkbox for checkable MenuItems -->
+            <Trigger Property="IsCheckable"
+                     Value="True">
+              <Setter TargetName="CheckMarkBorder"
+                      Property="Visibility"
+                      Value="Visible"/>
+            </Trigger>
+            <!-- Show checkmark when checked -->
+            <Trigger Property="IsChecked"
+                     Value="True">
+              <Setter TargetName="CheckMark"
+                      Property="Visibility"
+                      Value="Visible"/>
+            </Trigger>
+            <Trigger Property="IsHighlighted"
+                     Value="True">
+              <Setter TargetName="Border"
+                      Property="Background"
+                      Value="{StaticResource SteelBlueBrush}"/>
+              <Setter Property="Foreground"
+                      Value="{StaticResource WhiteBrush}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled"
+                     Value="False">
+              <Setter Property="Foreground"
+                      Value="{StaticResource LightGreyBrush}"/>
+              <Setter TargetName="CheckMarkBorder"
+                      Property="BorderBrush"
+                      Value="{StaticResource LightGreyBrush}"/>
+              <Setter TargetName="CheckMark"
+                      Property="Stroke"
+                      Value="{StaticResource LightGreyBrush}"/>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Rounded Input TextBox Style -->
+  <Style x:Key="RoundedInputStyle"
+         TargetType="TextBox">
+    <Setter Property="Background"
+            Value="{StaticResource GreyBrush}"/>
+    <Setter Property="Foreground"
+            Value="{StaticResource WhiteBrush}"/>
+    <Setter Property="BorderBrush"
+            Value="{StaticResource WhiteBrush}"/>
+    <Setter Property="BorderThickness"
+            Value="1"/>
+    <Setter Property="Padding"
+            Value="8,2"/>
+    <Setter Property="FontSize"
+            Value="12"/>
+    <Setter Property="VerticalContentAlignment"
+            Value="Center"/>
+    <Setter Property="HorizontalContentAlignment"
+            Value="Center"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="TextBox">
+          <Border
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            CornerRadius="6">
+            <ScrollViewer x:Name="PART_ContentHost"/>
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Rounded Toggle Switch Style -->
+  <Style x:Key="RoundedToggleSwitchStyle"
+         TargetType="ToggleButton">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="ToggleButton">
+          <StackPanel Orientation="Horizontal"
+                      VerticalAlignment="Center">
+            <!-- Switch -->
+            <Grid Width="40"
+                  Height="22"
+                  Margin="0,0,8,0">
+              <Border x:Name="SwitchBorder"
+                      CornerRadius="11"
+                      Background="{StaticResource GreyBrush}"
+                      BorderBrush="{StaticResource WhiteBrush}"
+                      BorderThickness="1"/>
+              <Ellipse x:Name="SwitchThumb"
+                       Width="18"
+                       Height="18"
+                       Fill="{StaticResource WhiteBrush}"
+                       Margin="2,2,0,2"
+                       HorizontalAlignment="Left"/>
+            </Grid>
+            <!-- Label -->
+            <TextBlock Text="Automatic Color Scale"
+                       Foreground="{StaticResource WhiteBrush}"
+                       FontWeight="SemiBold"
+                       VerticalAlignment="Center"
+                       Margin="0,0,0,0"/>
+          </StackPanel>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsChecked"
+                     Value="True">
+              <Setter TargetName="SwitchBorder"
+                      Property="Background"
+                      Value="{StaticResource PrimaryBlueBrush}"/>
+              <Setter TargetName="SwitchThumb"
+                      Property="HorizontalAlignment"
+                      Value="Right"/>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Rounded Tooltip Style -->
+  <Style x:Key="RoundedTooltipStyle"
+         TargetType="ToolTip">
+    <Setter Property="Background"
+            Value="{StaticResource GreyBrush}"/>
+    <Setter Property="BorderBrush"
+            Value="{StaticResource WhiteBrush}"/>
+    <Setter Property="BorderThickness"
+            Value="1"/>
+    <Setter Property="Padding"
+            Value="8"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="ToolTip">
+          <Border
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            CornerRadius="6"
+            Padding="{TemplateBinding Padding}">
+            <TextBlock
+              Text="{TemplateBinding Content}"
+              Foreground="{StaticResource WhiteBrush}"
+              TextWrapping="Wrap"
+              MaxWidth="300"/>
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+</ResourceDictionary>

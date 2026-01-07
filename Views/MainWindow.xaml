@@ -1,0 +1,465 @@
+﻿<!--
+  MainWindow.xaml
+  Main application window for the Oven Thermal Analytics Dashboard.
+  Contains the overall layout, including the top toolbar, main content area with four canvases (top/bottom, main/reinforcement), and the bottom toolbar.
+  Uses a Viewbox to maintain a 16:9 aspect ratio and a Grid to organize the UI into three main rows.
+-->
+
+<Window x:Class="fcb_thermo_app.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:views="clr-namespace:fcb_thermo_app.Views"
+        Title="Oven Thermal Analytics Dashboard"
+        Height="900"
+        Width="1600"
+        Background="#F5F5F5"
+        WindowState="Maximized">
+  <Grid>
+    <!-- Outer container to center the Viewbox -->
+    <Border HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+      <!-- Viewbox to maintain 16:9 aspect ratio -->
+      <Viewbox Stretch="Uniform">
+        <Grid Width="1600"
+              Height="900">
+          <!-- Define three rows -->
+          <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="800"/>
+            <RowDefinition Height="50"/>
+          </Grid.RowDefinitions>
+
+          <!-- Top Toolbar: Model/trial selection, placement, import, layers, export, help -->
+          <views:TopToolbar Grid.Row="0"/>
+
+          <!-- Main Content: Two rows, each with two canvases (main body and reinforcement, top and bottom) and stats -->
+          <Grid x:Name="MainContentGrid"
+                Grid.Row="1"
+                Margin="20">
+            <!-- Define two rows of equal height -->
+            <Grid.RowDefinitions>
+              <RowDefinition Height="*"/>
+              <!-- Top row -->
+              <RowDefinition Height="*"/>
+              <!-- Bottom row -->
+            </Grid.RowDefinitions>
+
+            <!-- Top Section -->
+            <Border Grid.Row="0"
+                    BorderBrush="{StaticResource PrimaryBlueBrush}"
+                    BorderThickness="2"
+                    CornerRadius="6"
+                    Background="{StaticResource PrimaryBlueBrush}"
+                    Margin="0,0,0,10">
+              <Grid Background="{StaticResource PrimaryBlueBrush}">
+                <!-- Define two rows -->
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto"/>
+                  <!-- Title and stats -->
+                  <RowDefinition Height="*"/>
+                  <!-- Canvases -->
+                </Grid.RowDefinitions>
+
+                <!-- Title + Stats Row -->
+                <Grid Grid.Row="0"
+                      Background="{StaticResource PrimaryBlueBrush}"
+                      Margin="5,10,5,10">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                  </Grid.ColumnDefinitions>
+
+                  <!-- Left Maximize Button -->
+                  <Button Grid.Column="0"
+                          Content="⛶"
+                          FontSize="14"
+                          FontWeight="Bold"
+                          Width="30"
+                          Height="30"
+                          Background="{StaticResource WhiteBrush}"
+                          Foreground="{StaticResource PrimaryBlueBrush}"
+                          BorderBrush="{StaticResource PrimaryBlueBrush}"
+                          BorderThickness="1"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Center"
+                          Margin="20,0,0,0"
+                          Tag="MainBodyTop"
+                          Click="MaximizeCanvas_Click">
+                    <Button.ToolTip>
+                      <ToolTip Style="{StaticResource RoundedTooltipStyle}">
+                        Maximize the main body top view.
+                      </ToolTip>
+                    </Button.ToolTip>
+                  </Button>
+
+                  <!-- Stats -->
+                  <StackPanel Grid.Column="1"
+                              Orientation="Horizontal"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center">
+                    <!-- Average Temperature -->
+                    <TextBlock Text="Average:"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,8,0"/>
+                    <TextBlock x:Name="MainBodyTopAverageTextBlock"
+                               Text="N/A"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,20,0"/>
+
+                    <!-- Highest Temperature -->
+                    <TextBlock Text="Highest:"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,8,0"/>
+                    <TextBlock x:Name="MainBodyTopMaxTextBlock"
+                               Text="N/A"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,20,0"/>
+
+                    <!-- Lowest Temperature -->
+                    <TextBlock Text="Lowest:"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,8,0"/>
+                    <TextBlock x:Name="MainBodyTopMinTextBlock"
+                               Text="N/A"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,20,0"/>
+
+                    <!-- Max Temperature Difference -->
+                    <TextBlock Text="Max. Difference:"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,8,0"/>
+                    <TextBlock x:Name="MainBodyTopMaxDifferenceTextBlock"
+                               Text="N/A"
+                               Foreground="{StaticResource WhiteBrush}"
+                               FontWeight="Bold"/>
+                  </StackPanel>
+
+                  <!-- Title -->
+                  <TextBlock Grid.Column="2"
+                             Text="Top View"
+                             FontSize="20"
+                             FontWeight="Bold"
+                             Foreground="{StaticResource WhiteBrush}"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"/>
+
+                  <!-- Stats -->
+                  <StackPanel Grid.Column="3"
+                              Orientation="Horizontal"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center">
+                    <!-- Average Temperature -->
+                    <TextBlock Text="Average:"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,8,0"/>
+                    <TextBlock x:Name="ReinforcementTopAverageTextBlock"
+                               Text="N/A"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,20,0"/>
+
+                    <!-- Highest Temperature -->
+                    <TextBlock Text="Highest:"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,8,0"/>
+                    <TextBlock x:Name="ReinforcementTopMaxTextBlock"
+                               Text="N/A"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,20,0"/>
+
+                    <!-- Lowest Temperature -->
+                    <TextBlock Text="Lowest:"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,8,0"/>
+                    <TextBlock x:Name="ReinforcementTopMinTextBlock"
+                               Text="N/A"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,20,0"/>
+
+                    <!-- Max Temperature Difference -->
+                    <TextBlock Text="Max. Difference:"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,8,0"/>
+                    <TextBlock x:Name="ReinforcementTopMaxDifferenceTextBlock"
+                               Text="N/A"
+                               Foreground="{StaticResource WhiteBrush}"
+                               FontWeight="Bold"/>
+                  </StackPanel>
+
+                  <!-- Right Maximize Button -->
+                  <Button Grid.Column="4"
+                          Content="⛶"
+                          FontSize="14"
+                          FontWeight="Bold"
+                          Width="30"
+                          Height="30"
+                          Background="{StaticResource WhiteBrush}"
+                          Foreground="{StaticResource PrimaryBlueBrush}"
+                          BorderBrush="{StaticResource PrimaryBlueBrush}"
+                          BorderThickness="1"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Center"
+                          Margin="0,0,20,0"
+                          Tag="ReinforcementTop"
+                          Click="MaximizeCanvas_Click">
+                    <Button.ToolTip>
+                      <ToolTip Style="{StaticResource RoundedTooltipStyle}">
+                        Maximize the reinforcement top view.
+                      </ToolTip>
+                    </Button.ToolTip>
+                  </Button>
+                </Grid>
+
+                <!-- Canvases Row -->
+                <Grid Grid.Row="1"
+                      Background="{StaticResource WhiteBrush}">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                  </Grid.ColumnDefinitions>
+
+                  <!-- First Canvas -->
+                  <Viewbox Stretch="Uniform"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Grid.Column="0"
+                           Margin="10,10,5,10">
+                    <Canvas x:Name="TopViewCanvas"
+                            Background="{StaticResource WhiteBrush}"/>
+                  </Viewbox>
+
+                  <!-- Second Canvas -->
+                  <Viewbox Stretch="Uniform"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Grid.Column="1"
+                           Margin="5,10,10,10">
+                    <Canvas x:Name="TopViewCanvasReinforcement"
+                            Background="{StaticResource WhiteBrush}"/>
+                  </Viewbox>
+                </Grid>
+              </Grid>
+            </Border>
+
+            <!-- Bottom Section -->
+            <Border Grid.Row="1"
+                    BorderBrush="{StaticResource PrimaryBlueBrush}"
+                    BorderThickness="2"
+                    CornerRadius="6"
+                    Background="{StaticResource PrimaryBlueBrush}"
+                    Margin="0,10,0,0">
+              <Grid Background="{StaticResource PrimaryBlueBrush}">
+                <!-- Define two rows -->
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto"/>
+                  <!-- Title and stats -->
+                  <RowDefinition Height="*"/>
+                  <!-- Canvases -->
+                </Grid.RowDefinitions>
+
+                <!-- Title + Stats Row -->
+                <Grid Grid.Row="0"
+                      Background="{StaticResource PrimaryBlueBrush}"
+                      Margin="5,10,5,10">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                  </Grid.ColumnDefinitions>
+
+                  <!-- Left Maximize Button -->
+                  <Button Grid.Column="0"
+                          Content="⛶"
+                          FontSize="14"
+                          FontWeight="Bold"
+                          Width="30"
+                          Height="30"
+                          Background="{StaticResource WhiteBrush}"
+                          Foreground="{StaticResource PrimaryBlueBrush}"
+                          BorderBrush="{StaticResource PrimaryBlueBrush}"
+                          BorderThickness="1"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Center"
+                          Margin="20,0,0,0"
+                          Tag="MainBodyBottom"
+                          Click="MaximizeCanvas_Click">
+                    <Button.ToolTip>
+                      <ToolTip Style="{StaticResource RoundedTooltipStyle}">
+                        Maximize the main body bottom view.
+                      </ToolTip>
+                    </Button.ToolTip>
+                  </Button>
+
+                  <!-- Stats -->
+                  <StackPanel Grid.Column="1"
+                              Orientation="Horizontal"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center">
+                    <!-- Average Temperature -->
+                    <TextBlock Text="Average:"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,8,0"/>
+                    <TextBlock x:Name="MainBodyBottomAverageTextBlock"
+                               Text="N/A"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,20,0"/>
+
+                    <!-- Highest Temperature -->
+                    <TextBlock Text="Highest:"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,8,0"/>
+                    <TextBlock x:Name="MainBodyBottomMaxTextBlock"
+                               Text="N/A"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,20,0"/>
+
+                    <!-- Lowest Temperature -->
+                    <TextBlock Text="Lowest:"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,8,0"/>
+                    <TextBlock x:Name="MainBodyBottomMinTextBlock"
+                               Text="N/A"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,20,0"/>
+
+                    <!-- Max Temperature Difference -->
+                    <TextBlock Text="Max. Difference:"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,8,0"/>
+                    <TextBlock x:Name="MainBodyBottomMaxDifferenceTextBlock"
+                               Text="N/A"
+                               Foreground="{StaticResource WhiteBrush}"
+                               FontWeight="Bold"/>
+                  </StackPanel>
+
+                  <!-- Title -->
+                  <TextBlock Grid.Column="2"
+                             Text="Bottom View"
+                             FontSize="20"
+                             FontWeight="Bold"
+                             Foreground="{StaticResource WhiteBrush}"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"/>
+
+                  <!-- Stats -->
+                  <StackPanel Grid.Column="3"
+                              Orientation="Horizontal"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center">
+                    <!-- Average Temperature -->
+                    <TextBlock Text="Average:"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,8,0"/>
+                    <TextBlock x:Name="ReinforcementBottomAverageTextBlock"
+                               Text="N/A"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,20,0"/>
+
+                    <!-- Highest Temperature -->
+                    <TextBlock Text="Highest:"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,8,0"/>
+                    <TextBlock x:Name="ReinforcementBottomMaxTextBlock"
+                               Text="N/A"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,20,0"/>
+
+                    <!-- Lowest Temperature -->
+                    <TextBlock Text="Lowest:"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,8,0"/>
+                    <TextBlock x:Name="ReinforcementBottomMinTextBlock"
+                               Text="N/A"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,20,0"/>
+
+                    <!-- Max Temperature Difference -->
+                    <TextBlock Text="Max. Difference:"
+                               Foreground="{StaticResource WhiteBrush}"
+                               Margin="0,0,8,0"/>
+                    <TextBlock x:Name="ReinforcementBottomMaxDifferenceTextBlock"
+                               Text="N/A"
+                               Foreground="{StaticResource WhiteBrush}"
+                               FontWeight="Bold"/>
+                  </StackPanel>
+
+                  <!-- Right Maximize Button -->
+                  <Button Grid.Column="4"
+                          Content="⛶"
+                          FontSize="14"
+                          FontWeight="Bold"
+                          Width="30"
+                          Height="30"
+                          Background="{StaticResource WhiteBrush}"
+                          Foreground="{StaticResource PrimaryBlueBrush}"
+                          BorderBrush="{StaticResource PrimaryBlueBrush}"
+                          BorderThickness="1"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Center"
+                          Margin="0,0,20,0"
+                          Tag="ReinforcementBottom"
+                          Click="MaximizeCanvas_Click">
+                    <Button.ToolTip>
+                      <ToolTip Style="{StaticResource RoundedTooltipStyle}">
+                        Maximize the reinforcement bottom view.
+                      </ToolTip>
+                    </Button.ToolTip>
+                  </Button>
+                </Grid>
+
+                <!-- Canvases Row -->
+                <Grid Grid.Row="1"
+                      Background="{StaticResource WhiteBrush}">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                  </Grid.ColumnDefinitions>
+
+                  <!-- First Canvas -->
+                  <Viewbox Stretch="Uniform"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Grid.Column="0"
+                           Margin="10,10,5,10">
+                    <Canvas x:Name="BottomViewCanvas"
+                            Background="{StaticResource WhiteBrush}"/>
+                  </Viewbox>
+
+                  <!-- Second Canvas -->
+                  <Viewbox Stretch="Uniform"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Grid.Column="1"
+                           Margin="5,10,10,10">
+                    <Canvas x:Name="BottomViewCanvasReinforcement"
+                            Background="{StaticResource WhiteBrush}"/>
+                  </Viewbox>
+                </Grid>
+              </Grid>
+            </Border>
+          </Grid>
+
+          <!-- Bottom Toolbar: Color scale, timeline, playback, and time offset controls -->
+          <views:BottomToolbar x:Name="BottomToolbar"
+                               Grid.Row="2"/>
+        </Grid>
+      </Viewbox>
+    </Border>
+  </Grid>
+</Window>

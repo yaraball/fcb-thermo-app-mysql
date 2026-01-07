@@ -1,0 +1,161 @@
+<!--
+  ModelImportWindow.xaml
+  Dialog window for creating a new DXF model.
+  Contains fields for model name, optional serial number, file selection for main body and reinforcement, and a create button.
+-->
+
+<Window x:Class="fcb_thermo_app.Views.ModelImportWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Create New DXF Model"
+        Height="300"
+        Width="600"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        Background="{StaticResource WhiteBrush}">
+  <Grid Margin="20">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <!-- Model Name -->
+      <RowDefinition Height="Auto"/>
+      <!-- Serial Number -->
+      <RowDefinition Height="Auto"/>
+      <!-- File Selection -->
+      <RowDefinition Height="Auto"/>
+      <!-- Filepaths -->
+      <RowDefinition Height="*"/>
+      <!--- Stretcher-->
+      <RowDefinition Height="Auto"/>
+      <!-- Submit Button -->
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"/>
+      <!-- Label Column -->
+      <ColumnDefinition Width="*"/>
+      <!-- Input Column -->
+    </Grid.ColumnDefinitions>
+
+    <!-- Model Name -->
+    <TextBlock Text="Model Name:"
+               VerticalAlignment="Center"
+               Foreground="{StaticResource BlackBrush}"
+               Margin="0,0,10,5"/>
+    <TextBox x:Name="ModelNameText"
+             Grid.Row="0"
+             Grid.Column="1"
+             VerticalAlignment="Center"
+             HorizontalAlignment="Stretch"
+             Margin="0,0,0,5">
+      <TextBox.ToolTip>
+        <ToolTip Style="{StaticResource RoundedTooltipStyle}">
+          Enter the name for the new model.
+        </ToolTip>
+      </TextBox.ToolTip>
+    </TextBox>
+
+    <!-- Serial Number -->
+    <TextBlock Text="Serial Number (optional):"
+               Grid.Row="1"
+               VerticalAlignment="Center"
+               Foreground="{StaticResource BlackBrush}"
+               Margin="0,5,10,10"/>
+    <TextBox x:Name="SerialNumberText"
+             Grid.Row="1"
+             Grid.Column="1"
+             VerticalAlignment="Center"
+             HorizontalAlignment="Stretch"
+             Margin="0,5,0,10">
+      <TextBox.ToolTip>
+        <ToolTip Style="{StaticResource RoundedTooltipStyle}">
+          Optionally enter a serial number for the model to distinguish between similar model names.
+        </ToolTip>
+      </TextBox.ToolTip>
+    </TextBox>
+
+    <!-- File Selection -->
+    <TextBlock Text="DXF Files:"
+               Grid.Row="2"
+               VerticalAlignment="Center"
+               Foreground="{StaticResource BlackBrush}"
+               Margin="0,0,10,0"/>
+    <Grid Grid.Row="2"
+          Grid.Column="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="1*"/>
+        <!-- Main Body -->
+        <ColumnDefinition Width="1*"/>
+        <!-- Reinforcement -->
+      </Grid.ColumnDefinitions>
+
+      <!-- Main Body File -->
+      <Button Content="Select Main Body"
+              Grid.Column="0"
+              Width="150"
+              Style="{StaticResource RoundedButtonStyle}"
+              Click="SelectMainBodyFile_Click"
+              HorizontalAlignment="Center">
+        <Button.ToolTip>
+          <ToolTip Style="{StaticResource RoundedTooltipStyle}">
+            Select the DXF file for the main body of the model.
+          </ToolTip>
+        </Button.ToolTip>
+      </Button>
+
+      <!-- Reinforcement File -->
+      <Button Content="Select Reinforcement"
+              Grid.Column="1"
+              Width="150"
+              Style="{StaticResource RoundedButtonStyle}"
+              Click="SelectReinforcementFile_Click"
+              HorizontalAlignment="Center">
+        <Button.ToolTip>
+          <ToolTip Style="{StaticResource RoundedTooltipStyle}">
+            Select the DXF file for the reinforcement part.
+          </ToolTip>
+        </Button.ToolTip>
+      </Button>
+    </Grid>
+
+    <!-- File Paths -->
+    <Grid Grid.Row="3"
+          Grid.Column="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="1*"/>
+        <!-- Main Body -->
+        <ColumnDefinition Width="1*"/>
+        <!-- Reinforcement -->
+      </Grid.ColumnDefinitions>
+
+      <!-- Main Body File -->
+      <TextBlock x:Name="MainBodyFilePathText"
+                 Grid.Column="0"
+                 Text="No file selected"
+                 FontStyle="Italic"
+                 Foreground="{StaticResource GreyBrush}"
+                 Margin="0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Center"/>
+
+      <!-- Reinforcement File -->
+      <TextBlock x:Name="ReinforcementFilePathText"
+                 Grid.Column="1"
+                 Text="No file selected"
+                 FontStyle="Italic"
+                 Foreground="{StaticResource GreyBrush}"
+                 Margin="0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Center"/>
+    </Grid>
+
+    <!-- Submit Button -->
+    <Button Content="Create"
+            Grid.Row="5"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            HorizontalAlignment="Right"
+            Style="{StaticResource RoundedButtonStyle}"
+            Click="CreateButton_Click"/>
+  </Grid>
+</Window>

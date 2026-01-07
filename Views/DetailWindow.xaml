@@ -1,0 +1,42 @@
+<!--
+  DetailWindow.xaml
+  Window for displaying a detailed view of a single canvas (main/reinforcement, top/bottom).
+  Contains a title section and a resizable canvas for rendering details.
+-->
+
+<Window x:Class="fcb_thermo_app.Views.DetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Detail View"
+        WindowStartupLocation="CenterOwner"
+        Background="{StaticResource WhiteBrush}"
+        WindowState="Maximized">
+  <Grid>
+    <!-- Title Section -->
+    <Border BorderBrush="{StaticResource PrimaryBlueBrush}"
+            BorderThickness="2"
+            CornerRadius="6"
+            Background="{StaticResource PrimaryBlueBrush}"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Margin="40">
+      <TextBlock x:Name="DetailTitle"
+                 Text="Detail View"
+                 FontSize="20"
+                 FontWeight="Bold"
+                 Foreground="{StaticResource WhiteBrush}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center"
+                 Padding="10"/>
+    </Border>
+
+    <!-- Canvas Section -->
+    <Viewbox Stretch="Uniform"
+             HorizontalAlignment="Center"
+             VerticalAlignment="Center"
+             Margin="20,80,20,20">
+      <Canvas x:Name="DetailCanvas"
+              Background="{StaticResource WhiteBrush}"/>
+    </Viewbox>
+  </Grid>
+</Window>

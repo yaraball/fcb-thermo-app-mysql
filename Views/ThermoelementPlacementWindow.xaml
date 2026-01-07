@@ -1,0 +1,381 @@
+﻿<!--
+  ThermoelementPlacementWindow.xaml
+  Full-screen window for placing thermoelements on main body and reinforcement canvases.
+  Contains main/reinforcement canvas panels, placement settings, current selection, mouse coordinates, and action buttons.
+-->
+
+<Window x:Class="fcb_thermo_app.Views.ThermoelementPlacementWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Thermoelement Placement"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterOwner"
+        Background="#0D1117">
+
+  <Grid Background="{StaticResource WhiteBrush}">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+      <!-- Main Content Area: Canvases for MainBody and Reinforcement -->
+      <ColumnDefinition Width="320"/>
+      <!-- Control Panel: Placement settings, selection info, actions -->
+    </Grid.ColumnDefinitions>
+
+    <!-- Main Content Area -->
+    <Grid Grid.Column="0"
+          Margin="20">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="10"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+
+      <!-- MainBody Canvases -->
+      <StackPanel x:Name="MainBodyCanvasesPanel"
+                  Visibility="Visible"
+                  Grid.RowSpan="3">
+        <TextBlock Text="MAINBODY TOP"
+                   Foreground="{StaticResource PrimaryBlueBrush}"
+                   FontWeight="SemiBold"
+                   FontSize="12"/>
+        <Viewbox Stretch="Uniform"
+                 Margin="0,0,0,10">
+          <Canvas x:Name="MainTopCanvas"
+                  Background="Transparent"
+                  MouseMove="Canvas_MouseMove"
+                  MouseLeftButtonDown="Canvas_MouseLeftButtonDown"
+                  MinWidth="250"
+                  MinHeight="100"/>
+        </Viewbox>
+
+        <TextBlock Text="MAINBODY BOTTOM"
+                   Foreground="{StaticResource PrimaryBlueBrush}"
+                   FontWeight="SemiBold"
+                   FontSize="12"/>
+        <Viewbox Stretch="Uniform">
+          <Canvas x:Name="MainBottomCanvas"
+                  Background="Transparent"
+                  MouseMove="Canvas_MouseMove"
+                  MouseLeftButtonDown="Canvas_MouseLeftButtonDown"
+                  MinWidth="250"
+                  MinHeight="100"/>
+        </Viewbox>
+      </StackPanel>
+
+      <!-- Reinforcement Canvases -->
+      <StackPanel x:Name="ReinforcementCanvasesPanel"
+                  Visibility="Collapsed"
+                  Grid.RowSpan="3">
+        <TextBlock Text="REINFORCEMENT TOP"
+                   Foreground="{StaticResource PrimaryBlueBrush}"
+                   FontWeight="SemiBold"
+                   FontSize="12"/>
+        <Viewbox Stretch="Uniform"
+                 Margin="0,0,0,10">
+          <Canvas x:Name="ReinfTopCanvas"
+                  Background="Transparent"
+                  MouseMove="Canvas_MouseMove"
+                  MouseLeftButtonDown="Canvas_MouseLeftButtonDown"
+                  MinWidth="250"
+                  MinHeight="100"/>
+        </Viewbox>
+
+        <TextBlock Text="REINFORCEMENT BOTTOM"
+                   Foreground="{StaticResource PrimaryBlueBrush}"
+                   FontWeight="SemiBold"
+                   FontSize="12"/>
+        <Viewbox Stretch="Uniform">
+          <Canvas x:Name="ReinfBottomCanvas"
+                  Background="Transparent"
+                  MouseMove="Canvas_MouseMove"
+                  MouseLeftButtonDown="Canvas_MouseLeftButtonDown"
+                  MinWidth="250"
+                  MinHeight="100"/>
+        </Viewbox>
+      </StackPanel>
+    </Grid>
+
+    <!-- Control Panel -->
+    <Border Grid.Column="1"
+            Background="{StaticResource PrimaryBlueBrush}"
+            BorderBrush="{StaticResource WhiteBrush}"
+            BorderThickness="1,0,0,0">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Panel Header -->
+        <Border Grid.Row="0"
+                Background="{StaticResource PrimaryBlueBrush}"
+                Padding="24,16"
+                BorderThickness="0,0,0,1"
+                BorderBrush="{StaticResource WhiteBrush}">
+          <StackPanel>
+            <TextBlock Text="THERMOELEMENT PLACEMENT"
+                       Foreground="{StaticResource WhiteBrush}"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Margin="0,0,0,4"/>
+            <TextBlock x:Name="StatusText"
+                       Text="Ready to start placement"
+                       TextWrapping="Wrap"
+                       Foreground="{StaticResource WhiteBrush}"
+                       FontSize="11"/>
+          </StackPanel>
+        </Border>
+
+        <!-- Controls -->
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto">
+          <StackPanel Margin="24,16,24,0">
+            <!-- Placement Settings -->
+            <StackPanel Margin="0,0,0,24">
+              <TextBlock Text="PLACEMENT SETTINGS"
+                         Foreground="{StaticResource WhiteBrush}"
+                         FontWeight="SemiBold"
+                         FontSize="12"
+                         Margin="0,0,0,12"/>
+
+              <!-- Model Type Toggle -->
+              <Button x:Name="ToggleModelButton"
+                      Content="📐 MAINBODY MODEL"
+                      Style="{StaticResource RoundedButtonStyle}"
+                      Background="{StaticResource WhiteBrush}"
+                      Foreground="{StaticResource PrimaryBlueBrush}"
+                      Click="ToggleModelButton_Click"
+                      Margin="0,0,0,12"
+                      ToolTip="Click to switch between MainBody and Reinforcement models"/>
+
+              <!-- Thermoelement Count Input -->
+              <StackPanel Orientation="Horizontal"
+                          VerticalAlignment="Center"
+                          Margin="0,0,0,12">
+                <TextBlock Text="Total thermoelements to place: "
+                           Foreground="{StaticResource WhiteBrush}"
+                           FontSize="11"
+                           VerticalAlignment="Center"
+                           Margin="0,0,8,0"/>
+                <TextBox x:Name="ThermoelementCountTextBox"
+                         Text="20"
+                         Style="{StaticResource RoundedInputStyle}"
+                         Background="{StaticResource WhiteBrush}"
+                         Foreground="{StaticResource PrimaryBlueBrush}"
+                         Width="60"
+                         VerticalAlignment="Center">
+                  <TextBox.ToolTip>
+                    <ToolTip Style="{StaticResource RoundedTooltipStyle}">
+                      Enter the number of thermoelements to place.
+                    </ToolTip>
+                  </TextBox.ToolTip>
+                </TextBox>
+              </StackPanel>
+
+              <TextBlock x:Name="ThermoelementsPlacedText"
+                         Text="0/0 thermoelements placed"
+                         Foreground="{StaticResource WhiteBrush}"
+                         FontSize="11"
+                         Margin="0,0,0,8"/>
+
+              <ProgressBar x:Name="PlacementProgress"
+                           Minimum="0"
+                           Maximum="100"
+                           Margin="0,0,0,8"/>
+
+              <!--- Channel Info -->
+              <TextBlock x:Name="ChannelInfoText"
+                         Text="No channels used"
+                         TextWrapping="Wrap"
+                         Foreground="{StaticResource WhiteBrush}"
+                         FontSize="10"
+                         FontFamily="Consolas, Courier New"
+                         Margin="0,0,0,16"/>
+
+              <Button x:Name="StartButton"
+                      Content="START PLACEMENT"
+                      Style="{StaticResource RoundedButtonStyle}"
+                      Background="{StaticResource DarkBlueBrush}"
+                      Foreground="{StaticResource WhiteBrush}"
+                      Click="StartButton_Click"
+                      Margin="0,8,0,0">
+                <Button.ToolTip>
+                  <ToolTip Style="{StaticResource RoundedTooltipStyle}">
+                    Start placing thermoelements on the model by left clicking on the desired locations.
+                  </ToolTip>
+                </Button.ToolTip>
+              </Button>
+
+              <!--- Layout Configuration -->
+              <Grid Margin="0,8,0,0">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*"/>
+                  <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <!--- Save Layout -->
+                <Button x:Name="SaveLayoutButton"
+                        Content="💾 Save Layout"
+                        Style="{StaticResource RoundedButtonStyle}"
+                        Background="{StaticResource WhiteBrush}"
+                        Foreground="{StaticResource PrimaryBlueBrush}"
+                        Click="SaveLayoutButton_Click"
+                        Grid.Column="0"
+                        Margin="0,0,4,0"
+                        HorizontalAlignment="Stretch">
+                  <Button.ToolTip>
+                    <ToolTip Style="{StaticResource RoundedTooltipStyle}">
+                      Save the current thermoelement layout for later use.
+                    </ToolTip>
+                  </Button.ToolTip>
+                </Button>
+                <!--- Load Layout -->
+                <Button x:Name="LoadLayoutButton"
+                        Content="📂 Load Layout"
+                        Style="{StaticResource RoundedButtonStyle}"
+                        Background="{StaticResource WhiteBrush}"
+                        Foreground="{StaticResource PrimaryBlueBrush}"
+                        Click="LoadLayoutButton_Click"
+                        Grid.Column="1"
+                        Margin="4,0,0,0"
+                        HorizontalAlignment="Stretch">
+                  <Button.ToolTip>
+                    <ToolTip Style="{StaticResource RoundedTooltipStyle}">
+                      Load a previously saved thermoelement layout.
+                    </ToolTip>
+                  </Button.ToolTip>
+                </Button>
+              </Grid>
+            </StackPanel>
+
+            <!-- Current Selection -->
+            <StackPanel Margin="0,0,0,24">
+              <TextBlock Text="CURRENT SELECTION"
+                         Foreground="{StaticResource WhiteBrush}"
+                         FontWeight="SemiBold"
+                         FontSize="12"
+                         Margin="0,0,0,12"/>
+
+              <StackPanel Orientation="Horizontal"
+                          VerticalAlignment="Center"
+                          Margin="0,0,0,16">
+                <TextBlock Text="CHANNEL:"
+                           Foreground="{StaticResource WhiteBrush}"
+                           FontSize="12"
+                           FontWeight="Medium"
+                           VerticalAlignment="Center"
+                           Margin="0,0,4,0"/>
+                <TextBlock x:Name="CurrentChannelText"
+                           Text="—"
+                           TextWrapping="Wrap"
+                           Foreground="{StaticResource WhiteBrush}"
+                           FontSize="12"
+                           VerticalAlignment="Center"
+                           Margin="0,0,16,0"/>
+                <TextBlock Text="POSITION:"
+                           Foreground="{StaticResource WhiteBrush}"
+                           FontSize="12"
+                           FontWeight="Medium"
+                           VerticalAlignment="Center"
+                           Margin="0,0,4,0"/>
+                <TextBlock x:Name="CurrentPositionText"
+                           Text="—"
+                           Foreground="{StaticResource WhiteBrush}"
+                           FontSize="12"
+                           VerticalAlignment="Center"/>
+              </StackPanel>
+
+              <Rectangle Height="1"
+                         Fill="{StaticResource WhiteBrush}"
+                         Margin="0,0,0,12"/>
+
+              <!--- Edit Thermoelement -->
+              <Button x:Name="EditThermoelementButton"
+                      Content="REPOSITION SELECTED THERMOELEMENT"
+                      Style="{StaticResource RoundedButtonStyle}"
+                      Background="{StaticResource WhiteBrush}"
+                      Foreground="{StaticResource PrimaryBlueBrush}"
+                      Click="EditThermoelementButton_Click"
+                      IsEnabled="False"
+                      Margin="0,0,0,8">
+                <Button.ToolTip>
+                  <ToolTip Style="{StaticResource RoundedTooltipStyle}">
+                    Edit the position of the selected thermoelement. The selected thermoelement is highlighted in pink. Re-click on the model to place it at a new location.
+                  </ToolTip>
+                </Button.ToolTip>
+              </Button>
+
+              <!-- Change Channel Button -->
+              <Button x:Name="ChangeChannelButton"
+                      Content="CHANGE CHANNEL"
+                      Style="{StaticResource RoundedButtonStyle}"
+                      Background="{StaticResource DarkBlueBrush}"
+                      Foreground="{StaticResource WhiteBrush}"
+                      Click="ChangeChannelButton_Click"
+                      IsEnabled="False"
+                      Margin="0">
+                <Button.ToolTip>
+                  <ToolTip Style="{StaticResource RoundedTooltipStyle}">
+                    Change the channel number of the selected thermoelement. The selected thermoelement is highlighted in pink. Use this to assign a new channel number.
+                  </ToolTip>
+                </Button.ToolTip>
+              </Button>
+            </StackPanel>
+
+            <!-- Mouse Coordinates -->
+            <StackPanel Margin="0,0,0,24">
+              <TextBlock Text="MOUSE COORDINATES"
+                         Foreground="{StaticResource WhiteBrush}"
+                         FontWeight="SemiBold"
+                         FontSize="12"
+                         Margin="0,0,0,8"/>
+              <TextBlock x:Name="MouseCoordText"
+                         Text="X: 0.000m, Y: 0.000m"
+                         Foreground="{StaticResource WhiteBrush}"
+                         FontSize="11"
+                         FontFamily="Consolas, Courier New"/>
+            </StackPanel>
+
+            <!-- Actions -->
+            <StackPanel Margin="0,0,0,24">
+              <TextBlock Text="ACTIONS"
+                         Foreground="{StaticResource WhiteBrush}"
+                         FontWeight="SemiBold"
+                         FontSize="12"
+                         Margin="0,0,0,12"/>
+
+              <!--- Confirm -->
+              <Button x:Name="ConfirmButton"
+                      Content="CONFIRM PLACEMENT"
+                      Style="{StaticResource RoundedButtonStyle}"
+                      Background="{StaticResource DarkBlueBrush}"
+                      Foreground="{StaticResource WhiteBrush}"
+                      Click="ConfirmButton_Click"
+                      IsEnabled="False"
+                      Margin="0,0,0,8">
+                <Button.ToolTip>
+                  <ToolTip Style="{StaticResource RoundedTooltipStyle}">
+                    Confirm all placed thermoelements and save to the model.
+                  </ToolTip>
+                </Button.ToolTip>
+              </Button>
+
+              <!--- Reset -->
+              <Button x:Name="ResetButton"
+                      Content="RESET ALL THERMOELEMENTS"
+                      Style="{StaticResource RoundedButtonStyle}"
+                      Background="{StaticResource WhiteBrush}"
+                      Foreground="{StaticResource PrimaryBlueBrush}"
+                      Click="ResetButton_Click"
+                      Margin="0">
+                <Button.ToolTip>
+                  <ToolTip Style="{StaticResource RoundedTooltipStyle}">
+                    Remove all placed thermoelements and start over.
+                  </ToolTip>
+                </Button.ToolTip>
+              </Button>
+            </StackPanel>
+          </StackPanel>
+        </ScrollViewer>
+      </Grid>
+    </Border>
+  </Grid>
+</Window>

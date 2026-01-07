@@ -1,0 +1,29 @@
+# Ignore build output directories
+bin/
+obj/
+
+# Ignore Visual Studio (Code) settings
+.vscode/
+.vs/
+
+# Ignore NuGet packages
+*.nupkg
+
+# Ignore System files
+Thumbs.db
+.DS_Store
+
+# Ignore Log files
+*.log
+
+# Ignore Debugging and temporary files
+*.user
+*.lock.json
+*.suo
+*.pdb
+*.tmp
+
+# Publish output
+publish/
+
+.fake

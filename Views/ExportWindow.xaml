@@ -1,0 +1,95 @@
+<!--
+  ExportWindow.xaml
+  Dialog window for exporting the main view or individual canvases as JPEG images.
+  Contains selection checkboxes, a list of canvases, and an export button.
+-->
+
+<Window x:Class="fcb_thermo_app.Views.ExportWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Export View as JPEG"
+        Height="400"
+        Width="520"
+        Background="#F5F5F5"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+  <Border Margin="20"
+          Padding="16"
+          Background="{StaticResource WhiteBrush}"
+          CornerRadius="12"
+          BorderBrush="{StaticResource PrimaryBlueBrush}"
+          BorderThickness="2">
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+
+      <!-- Title -->
+      <TextBlock Text="Export View"
+                 FontSize="22"
+                 FontWeight="Bold"
+                 Foreground="{StaticResource PrimaryBlueBrush}"
+                 Margin="0,0,0,12"/>
+
+      <!-- Selection Area -->
+      <StackPanel Grid.Row="1"
+                  Margin="0,0,0,12">
+        <!--- Select Main View -->
+        <CheckBox x:Name="MainViewCheckBox"
+                  Content="Export Main View (all canvases)"
+                  IsChecked="False"
+                  FontWeight="SemiBold"
+                  Foreground="{StaticResource PrimaryBlueBrush}"
+                  Margin="0,0,0,8">
+          <CheckBox.ToolTip>
+            <ToolTip Style="{StaticResource RoundedTooltipStyle}">
+              Export all canvases as a single image, similar to how they are represented in the main window of the app.
+            </ToolTip>
+          </CheckBox.ToolTip>
+        </CheckBox>
+        <!--- Select Individual Canvases -->
+        <TextBlock Text="Or select individual canvases:"
+                   FontWeight="SemiBold"
+                   Foreground="{StaticResource PrimaryBlueBrush}"
+                   Margin="0,8,0,4"/>
+        <ListBox x:Name="CanvasList"
+                 SelectionMode="Multiple"
+                 Background="{StaticResource WhiteBrush}"
+                 BorderBrush="{StaticResource PrimaryBlueBrush}"
+                 BorderThickness="1"
+                 Height="120">
+          <ListBox.ToolTip>
+            <ToolTip Style="{StaticResource RoundedTooltipStyle}">
+              Select individual canvases to export.
+            </ToolTip>
+          </ListBox.ToolTip>
+          <ListBoxItem>
+            <CheckBox Content="Top View (Main Body)"
+                      Tag="TopViewCanvas"/>
+          </ListBoxItem>
+          <ListBoxItem>
+            <CheckBox Content="Top View (Reinforcement)"
+                      Tag="TopViewCanvasReinforcement"/>
+          </ListBoxItem>
+          <ListBoxItem>
+            <CheckBox Content="Bottom View (Main Body)"
+                      Tag="BottomViewCanvas"/>
+          </ListBoxItem>
+          <ListBoxItem>
+            <CheckBox Content="Bottom View (Reinforcement)"
+                      Tag="BottomViewCanvasReinforcement"/>
+          </ListBoxItem>
+        </ListBox>
+      </StackPanel>
+
+      <!-- Export Button -->
+      <Button Grid.Row="2"
+              Content="Export as JPEG"
+              Style="{StaticResource RoundedButtonStyle}"
+              HorizontalAlignment="Right"
+              Click="ExportButton_Click"/>
+    </Grid>
+  </Border>
+</Window>
